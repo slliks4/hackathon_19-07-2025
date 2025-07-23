@@ -1,12 +1,33 @@
-# React + Vite
+# What are we building
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Just a folder structure that accepts nested folders that accepts notes
 
-Currently, two official plugins are available:
+Folder -> {
+    id: uuid,
+    title: '',
+    created_at: datetime,
+    updated_at: datetime,
+    dept: int,
+    parent: uuid | null,
+    notes: [{'id': uuid, 'title': str}],        # summary only
+    subfolders: [{'id': uuid, 'title': str}],   # summary only
+    is_trashed: bool,
+    sort_index: int,
+}
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+notes -> {
+    id: uuid,
+    title: '',
+    content: '',
+    created_at: datetime,
+    updated_at: datetime,
+    is_trashed: bool,
+}
 
-## Expanding the ESLint configuration
+SubFolder -> folder
+So the idea basically is creating a folder which can accept a list of subfolders and notes, by default it stores the uuid and title for easy fetching in the ui without having to get the full content of the folder or notes, only when expanded does it then do the full search
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+The dept just tells if it's nexted and how deep it is nexted,
+starts from 0 - infinity (can't be infinite in practical)
+
+Reason, if to avoid duplicate of names within the same dept.
